@@ -9,9 +9,9 @@ router.get(
     productsController.listProducts,
 );
 
-// router.get(
-//     '/:id',
-//     () => {}// fazer a função no controller
-// );
+router.get(
+    '/:id',
+    productsController.getProduct,
+);
 
 module.exports = router;
