@@ -9,7 +9,16 @@ const products = [
   }
 ];
 
+const validName = "Escudo do Capitão América";
+
+const newProduct = {
+  id: 3,
+  name: validName
+}
+
 module.exports = {
     products,
+    validName,
+    newProduct,
 };
   
