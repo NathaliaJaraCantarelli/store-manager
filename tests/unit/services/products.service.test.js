@@ -38,11 +38,11 @@ describe('Testando a unidade service de produtos', function () {
 
     describe('Criando um novo produto', function () {
         it('Retorna o id do produto cadastrado', async function () {
-            sinon.stub(productsModel, 'insertProduct').resolves(3);
-            sinon.stub(productsModel, 'findAll').resolves(products[2]);
+            sinon.stub(productsModel, 'insertProduct').resolves(1);
+            sinon.stub(productsModel, 'findAll').resolves(products[0]);
             const result = await productsService.createProduct(validName);
             expect(result.type).to.be.equal(null);
-            expect(result.message).to.be.deep.equal(products[2]);
+            expect(result.message).to.be.deep.equal(products[0]);
         });
 
         it('Retorna um erro ao não enviar um nome', async function () {
