@@ -8,7 +8,7 @@ const insertSaleProduct = async (req, res) => {
     res.status(201).json(message);
 };
 
-const returnAllSales = async (req, res) => {
+const returnAllSales = async (_req, res) => {
     const { message } = await salesService.findAllSales();
     res.status(200).json(message);
 };
