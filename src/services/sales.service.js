@@ -15,10 +15,25 @@ const insertSaleProduct = async (saleDetails) => {
     if (errorNotFound) return { type: 'PRODUCT_NOT_FOUND', message: notFoundMessage };
 
     const idSale = await salesModel.insertSale();
-    const newInsertSaleProduct = await salesModel.insertSaleProduct({ idSale, saleDetails });
+    const newInsertSaleProduct = await salesModel
+        .insertSaleProduct({ idSale: idSale.insertId, saleDetails });
     return { type: null, message: newInsertSaleProduct };
+};
+
+const findAllSales = async () => {
+    const allSales = await salesModel.findAllSales();
+    return { type: null, message: allSales };
+};
+
+const findSaleById = async (idSale) => {
+    const saleById = await salesModel.findSaleById(idSale);
+    if (!saleById.length) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+
+    return { type: null, message: saleById };
 };
 
 module.exports = {
     insertSaleProduct,
+    findAllSales,
+    findSaleById,
 };
