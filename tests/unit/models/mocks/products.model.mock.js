@@ -11,9 +11,15 @@ const products = [
 
 const newProduct = {
   "name": "Escudo do Capitão América"
+};
+
+const updateProduct = {
+  "id": 1,
+  "name": "Tridente"
 }
 
 module.exports = {
     products,
     newProduct,
+    updateProduct,
 };

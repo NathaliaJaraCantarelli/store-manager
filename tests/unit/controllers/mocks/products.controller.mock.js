@@ -16,9 +16,15 @@ const newProduct = {
   name: validName
 }
 
+const updateProduct = {
+  "id": 1,
+  "name": "Tridente"
+};
+
 module.exports = {
     products,
     validName,
     newProduct,
+    updateProduct,
 };
   

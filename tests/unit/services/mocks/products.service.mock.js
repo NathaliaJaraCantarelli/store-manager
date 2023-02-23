@@ -11,8 +11,25 @@ const products = [
 
 const validName = "Escudo do Capitão América";
 
+const updateProduct = {
+  "id": 1,
+  "name": "Tridente"
+};
+
+const updateProductNoName = {
+  "id": 1
+};
+
+const updateProductIdInvalid = {
+  "id": 999,
+  "name": "Tridente"
+};
+
 module.exports = {
     products,
     validName,
+    updateProduct,
+    updateProductNoName,
+    updateProductIdInvalid
 };
   

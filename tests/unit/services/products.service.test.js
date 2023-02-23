@@ -2,7 +2,13 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const { productsService } = require('../../../src/services');
 const { productsModel } = require('../../../src/models');
-const { products, validName } = require('./mocks/products.service.mock');
+const {
+    products,
+    validName,
+    updateProduct,
+    updateProductNoName,
+    updateProductIdInvalid
+} = require('./mocks/products.service.mock');
 
 
 describe('Testando a unidade service de produtos', function () {
@@ -59,6 +65,29 @@ describe('Testando a unidade service de produtos', function () {
             const result = await productsService.createProduct('Nome');
             expect(result.type).to.be.equal('INVALID_VALUE');
             expect(result.message).to.be.deep.equal('"name" length must be at least 5 characters long');
+        });
+    });
+
+    describe('Atualizando um produto', function () {
+        it('Retorna o produto atualizado', async function () {
+            sinon.stub(productsModel, 'updateProduct').resolves(updateProduct);
+            const result = await productsService.updateProduct(updateProduct);
+            expect(result.type).to.be.equal(null);
+            expect(result.message).to.be.deep.equal(updateProduct);
+        });
+
+        it('Retorna um erro quando não é enviado nome', async function () {
+            sinon.stub(productsModel, 'updateProduct').resolves(updateProductNoName);
+            const result = await productsService.updateProduct(updateProductNoName);
+            expect(result.type).to.be.equal('INVALID_VALUE');
+            expect(result.message).to.be.deep.equal('"name" is required');
+        });
+
+        it('Retorna um erro quando o produto não é encontrado', async function () {
+            sinon.stub(productsModel, 'updateProduct').resolves(updateProductIdInvalid);
+            const result = await productsService.updateProduct(updateProductIdInvalid);
+            expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+            expect(result.message).to.be.deep.equal('Product not found');
         });
     });
 
