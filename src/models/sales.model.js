@@ -5,7 +5,7 @@ const insertSale = async () => {
         'INSERT INTO sales (date) VALUE (NOW())',
     );
 
-    return insertId;
+    return { insertId };
 };
 
 const insertSaleProduct = async ({ idSale, saleDetails }) => {
