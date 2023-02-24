@@ -67,6 +67,22 @@ describe('Testa a unidade service de Vendas', function () {
         });
     });
 
+    describe('Deletando um produto', function () {
+        it('Retorna true quando um produto é deletado', async function () {
+            sinon.stub(salesModel,'findSaleById').resolves(salesById);
+            sinon.stub(salesModel, 'deleteSale').resolves(true);
+            sinon.stub(salesModel,'deleteSaleProducts').resolves(true);
+            const result = await salesService.deleteSale(1);
+            expect(result.type).to.be.equal(null);
+            expect(result.message).to.be.equal(null);
+        });
+        it('Retorna Not Found quando o id não existe', async function () {
+            sinon.stub(salesModel,'findSaleById').resolves(false);
+            const result = await salesService.deleteSale(999);
+            expect(result.type).to.be.equal('SALE_NOT_FOUND');
+            expect(result.message).to.be.equal('Sale not found');
+        });
+    });
     afterEach(function () {
         sinon.restore();
     });

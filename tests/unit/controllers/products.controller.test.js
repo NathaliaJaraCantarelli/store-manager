@@ -189,7 +189,7 @@ describe('Testando a unidade controller de produtos', function () {
 
             expect(res.status).to.have.been.calledWith(204);
         });
-        it('Retorna true quando um produto é deletado', async function () {
+        it('Retorna Not Found quando a venda não existe', async function () {
             const res = {};
             const req = {
                 params: { id: 999 },

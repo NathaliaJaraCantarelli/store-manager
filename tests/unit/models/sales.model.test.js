@@ -38,6 +38,20 @@ describe('Testes da unidade model de vendas', function () {
             expect(result).to.be.deep.equal(salesById);
         });
     });
+
+    describe('Testa se é deletado uma venda', function () {
+        it('É deletado uma venda da tabela sales', async function () {
+            sinon.stub(connection, 'execute').resolves(true);
+            const result = await salesModel.deleteSale(1);
+            expect(result).to.be.equal(true);
+        });
+
+        it('É deletado uma venda da tabela sales_products', async function () {
+            sinon.stub(connection, 'execute').resolves(true);
+            const result = await salesModel.deleteSaleProducts(1);
+            expect(result).to.be.equal(true);
+        });
+    });
     
 
     afterEach(function () {

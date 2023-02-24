@@ -102,6 +102,41 @@ describe('Testando a unidade controller de vendas', function () {
         });
     });
 
+    describe('Deletando uma venda', function () {
+        it('Retorna true quando uma venda é deletada', async function () {
+            const res = {};
+            const req = {
+                params: { id: 1 },
+            };
+
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns();
+            sinon.stub(salesService, 'deleteSale')
+                .resolves({ type: null, message: null });
+            
+            await salesController.deleteSale(req, res);
+
+            expect(res.status).to.have.been.calledWith(204);
+        });
+        it('Retorna Not Found quando a venda não existe', async function () {
+            const res = {};
+            const req = {
+                params: { id: 999 },
+            };
+
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns();
+            sinon.stub(salesService, 'deleteSale')
+                .resolves({ type: 'SALE_NOT_FOUND', message: 'Sale not found' });
+            
+            await salesController.deleteSale(req, res);
+
+            expect(res.status).to.have.been.calledWith(404);
+            expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+        });
+    });
+
+
     afterEach(function () {
         sinon.restore();
     });
