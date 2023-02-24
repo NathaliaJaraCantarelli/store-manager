@@ -34,8 +34,8 @@ describe('Testando a unidade service de produtos', function () {
             expect(result.message).to.be.equal('Product not found');
         });
     
-        it('Retorna o prosuto correspondente ao id', async function () {
-            sinon.stub(productsModel, 'findById').resolves(products[0])
+        it('Retorna o produto correspondente ao id', async function () {
+            sinon.stub(productsModel, 'findById').resolves(products[0]);
             const result = await productsService.findById(1);
             expect(result.type).to.be.equal(null);
             expect(result.message).to.be.deep.equal(products[0]);
@@ -91,6 +91,21 @@ describe('Testando a unidade service de produtos', function () {
         });
     });
 
+    describe('Deletando um produto', function () {
+        it('Retorna true quando um produto é deletado', async function () {
+            sinon.stub(productsModel, 'findById').resolves(products[0]);
+            sinon.stub(productsModel, 'deleteProduct').resolves(true);
+            const result = await productsService.deleteProduct(1);
+            expect(result.type).to.be.equal(null);
+            expect(result.message).to.be.equal(null);
+        });
+        it('Retorna Not Found quando o id não existe', async function () {
+            sinon.stub(productsModel, 'findById').resolves(false);
+            const result = await productsService.deleteProduct(999);
+            expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+            expect(result.message).to.be.equal('Product not found');
+        });
+    });
     afterEach(function () {
         sinon.restore();
     });

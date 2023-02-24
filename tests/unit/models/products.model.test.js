@@ -30,6 +30,12 @@ describe('Testes de unidade do model de produtos', function () {
         
     });
 
+    it('Deletando um produto', async function () {
+        sinon.stub(connection, 'execute').resolves();
+        const result = await productsModel.deleteProduct(1);
+        expect(result).to.be.equal(true);
+    });
+
     afterEach(function () {
         sinon.restore();
     });
