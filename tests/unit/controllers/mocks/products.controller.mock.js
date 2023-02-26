@@ -21,10 +21,19 @@ const updateProduct = {
   "name": "Tridente"
 };
 
+const productSearch = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  }
+];
+
+
 module.exports = {
     products,
     validName,
     newProduct,
     updateProduct,
+    productSearch,
 };
   

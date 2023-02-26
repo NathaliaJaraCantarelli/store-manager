@@ -25,11 +25,19 @@ const updateProductIdInvalid = {
   "name": "Tridente"
 };
 
+const productSearch = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  }
+];
+
 module.exports = {
     products,
     validName,
     updateProduct,
     updateProductNoName,
-    updateProductIdInvalid
+    updateProductIdInvalid,
+    productSearch,
 };
   

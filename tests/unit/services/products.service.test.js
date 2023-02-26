@@ -7,7 +7,8 @@ const {
     validName,
     updateProduct,
     updateProductNoName,
-    updateProductIdInvalid
+    updateProductIdInvalid,
+    productSearch,
 } = require('./mocks/products.service.mock');
 
 
@@ -106,6 +107,16 @@ describe('Testando a unidade service de produtos', function () {
             expect(result.message).to.be.equal('Product not found');
         });
     });
+
+    describe('Pesquisando um produto', function () {
+        it('Buscando o produto que contém martelo', async function () {
+            sinon.stub(productsModel, 'searchProduct').resolves(productSearch);
+            const result = await productsService.searchProduct('martelo');
+            expect(result.type).to.be.equal(null);
+            expect(result.message).to.be.equal(productSearch);
+        });
+    });
+
     afterEach(function () {
         sinon.restore();
     });

@@ -12,6 +12,7 @@ const {
     validName,
     newProduct,
     updateProduct,
+    productSearch,
 } = require('./mocks/products.controller.mock');
 
 describe('Testando a unidade controller de produtos', function () {
@@ -204,6 +205,25 @@ describe('Testando a unidade controller de produtos', function () {
 
             expect(res.status).to.have.been.calledWith(404);
             expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+        });
+    });
+
+    describe('Pesquisando um produto', function () {
+        it('Buscando o produto que contém martelo', async function () {
+            const res = {};
+            const req = {
+                query: 'martelo',
+            };
+
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns();
+            sinon.stub(productsService, 'searchProduct')
+                .resolves({ type: null, message: productSearch });
+            
+            await productsController.searchProduct(req, res);
+
+            expect(res.status).to.have.been.calledWith(200);
+            expect(res.json).to.have.been.calledWith(productSearch);
         });
     });
 

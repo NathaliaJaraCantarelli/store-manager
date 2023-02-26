@@ -16,10 +16,18 @@ const newProduct = {
 const updateProduct = {
   "id": 1,
   "name": "Tridente"
-}
+};
+
+const productSearch = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  }
+];
 
 module.exports = {
     products,
     newProduct,
     updateProduct,
+    productSearch,
 };
