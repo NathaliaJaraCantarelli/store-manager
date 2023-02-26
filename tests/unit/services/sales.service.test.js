@@ -10,6 +10,9 @@ const {
     bodyRequestNotFound,
     allSales,
     salesById,
+    returnSalesUpdate,
+    bodyRequestUpdate,
+    updateResponse,
 } = require('./mocks/sales.service.mock');
 
 describe('Testa a unidade service de Vendas', function () {
@@ -67,8 +70,8 @@ describe('Testa a unidade service de Vendas', function () {
         });
     });
 
-    describe('Deletando um produto', function () {
-        it('Retorna true quando um produto é deletado', async function () {
+    describe('Deletando uma venda', function () {
+        it('Retorna true quando uma venda é deletada', async function () {
             sinon.stub(salesModel,'findSaleById').resolves(salesById);
             sinon.stub(salesModel, 'deleteSale').resolves(true);
             sinon.stub(salesModel,'deleteSaleProducts').resolves(true);
@@ -83,6 +86,41 @@ describe('Testa a unidade service de Vendas', function () {
             expect(result.message).to.be.equal('Sale not found');
         });
     });
+
+    describe('Atualizando uma venda', function () {
+        it('Retorna a venda atualizada', async function () {
+            sinon.stub(salesModel, 'deleteSaleProducts').resolves(true);
+            sinon.stub(salesModel, 'insertSaleProduct').resolves(returnSalesUpdate);
+            const result = await salesService.updateSale({ idSale: 1, saleDetails: bodyRequestUpdate });
+            expect(result.type).to.be.equal(null);
+            expect(result.message).to.be.deep.equal(updateResponse);
+        });
+
+        it('Retorna Not Found quando o id da venda não existe', async function () {
+            sinon.stub(salesModel, 'deleteSaleProducts').resolves(false);
+            sinon.stub(salesModel, 'insertSaleProduct').resolves([]);
+            const result = await salesService.updateSale({ idSale: 999, saleDetails: bodyRequestUpdate });
+            expect(result.type).to.be.equal('SALE_NOT_FOUND');
+            expect(result.message).to.be.deep.equal('Sale not found');
+        });
+
+        it('Retorna um erro quando não é enviado um dos campos', async function () {
+            sinon.stub(salesModel, 'deleteSaleProducts').resolves(false);
+            sinon.stub(salesModel, 'insertSaleProduct').resolves([]);
+            const result = await salesService.updateSale({ idSale: 1, saleDetails: bodyRequestNoId });
+            expect(result.type).to.be.equal('INVALID_INPUT');
+            expect(result.message).to.be.deep.equal('"productId" is required');
+        });
+
+        it('Retorna Not Found quando o id do produto não existe', async function () {
+            sinon.stub(salesModel, 'deleteSaleProducts').resolves(false);
+            sinon.stub(salesModel, 'insertSaleProduct').resolves([]);
+            const result = await salesService.updateSale({ idSale: 1, saleDetails: bodyRequestNotFound });
+            expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+            expect(result.message).to.be.deep.equal('Product not found');
+        });
+    });
+
     afterEach(function () {
         sinon.restore();
     });

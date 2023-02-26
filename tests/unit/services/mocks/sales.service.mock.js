@@ -89,6 +89,45 @@ const salesById = [
   }
 ];
 
+const bodyRequestUpdate = [
+  {
+    "productId": 1,
+    "quantity": 10
+  },
+  {
+    "productId": 2,
+    "quantity": 50
+  }
+];
+
+const returnSalesUpdate = {
+  "id": 1,
+  "itemsSold": [
+    {
+      "productId": 1,
+      "quantity": 10
+    },
+    {
+      "productId": 2,
+      "quantity": 50
+    }
+  ]
+};
+
+const updateResponse = {
+  "saleId": 1,
+  "itemsUpdated": [
+    {
+      "productId": 1,
+      "quantity": 10
+    },
+    {
+      "productId": 2,
+      "quantity": 50
+    }
+  ]
+};
+
 module.exports = {
     returnSales,
     bodyRequest,
@@ -97,5 +136,8 @@ module.exports = {
     bodyRequestNotFound,
     allSales,
     salesById,
+    returnSalesUpdate,
+    bodyRequestUpdate,
+    updateResponse,
 };
   

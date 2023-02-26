@@ -13,6 +13,9 @@ const {
     bodyRequestInvalid,
     allSales,
     salesById,
+    returnSalesUpdate,
+    bodyRequestUpdate,
+    updateResponse,
 } = require('./mocks/sales.controller.mock');
 
 describe('Testando a unidade controller de vendas', function () {
@@ -118,6 +121,7 @@ describe('Testando a unidade controller de vendas', function () {
 
             expect(res.status).to.have.been.calledWith(204);
         });
+
         it('Retorna Not Found quando a venda não existe', async function () {
             const res = {};
             const req = {
@@ -136,6 +140,43 @@ describe('Testando a unidade controller de vendas', function () {
         });
     });
 
+    describe('Atualizando uma venda', function () {
+        it('Retorna a venda atualizada', async function () {
+            const res = {};
+            const req = {
+                params: { id: 1 },
+                body: bodyRequestUpdate,
+            };
+
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns();
+            sinon.stub(salesService, 'updateSale')
+                .resolves({ type: null, message: updateResponse });
+
+            await salesController.updateSale(req, res);
+
+            expect(res.status).to.have.been.calledWith(200);
+            expect(res.json).to.have.been.calledWith(updateResponse);
+        });
+
+        it('Retorna Not Found quando a venda não existe', async function () {
+            const res = {};
+            const req = {
+                params: { id: 999 },
+                body: bodyRequestUpdate,
+            };
+
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns();
+            sinon.stub(salesService, 'updateSale')
+                .resolves({ type: 'SALE_NOT_FOUND', message: 'Sale not found' });
+            
+            await salesController.updateSale(req, res);
+
+            expect(res.status).to.have.been.calledWith(404);
+            expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+        });
+    });
 
     afterEach(function () {
         sinon.restore();
