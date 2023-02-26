@@ -6,6 +6,11 @@ const validateNewProduct = require('../middlewares/validateNewProduct');
 const router = express.Router();
 
 router.get(
+    '/search', 
+    productsController.searchProduct,
+);
+
+router.get(
     '/',
     productsController.listProducts,
 );
